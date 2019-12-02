@@ -7,10 +7,9 @@ function main(filename) {
       return parseInt(i)
     })
     const copy = list.slice()
-    console.log(run(list))
+    console.log(run(list)[0])
     copy[1] = 0
     copy[2] = 0
-   
     console.log(find(copy))
   })
 }
@@ -21,9 +20,7 @@ function find(list) {
   for(let noun = 0; noun <=99; noun++) {
     for(let verb = 0; verb <=99; verb++) {
       const plist = permute(list, noun, verb)
-      console.log(`${noun}, ${verb}`)
-      const res = run(plist)
-      console.log(`res=${res}`)
+      const res = run(plist)[0]
       if(res === wanted) {
         return (100*noun)+verb
       }
@@ -63,7 +60,7 @@ function run(list) {
     pos += 4
   }
 
-  return list[0]
+  return list
 }
 
 module.exports.run = run
