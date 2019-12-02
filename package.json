@@ -4,7 +4,8 @@
   "description": "Advent of code 2019",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tap --no-coverage 'test/**/*.js' ",
+    "autotest": "tap -w 'test/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/knuthaug/aoc-2019/issues"
   },
-  "homepage": "https://github.com/knuthaug/aoc-2019#readme"
+  "homepage": "https://github.com/knuthaug/aoc-2019#readme",
+  "dependencies": {
+    "supervisor": "0.12.0",
+    "tap": "14.10.2"
+  }
 }

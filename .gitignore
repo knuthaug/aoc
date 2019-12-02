@@ -1,2 +1,4 @@
 secret.txt
+.nyc_output/
+node_modules
 
