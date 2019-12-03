@@ -119,15 +119,6 @@ function mark(coords, intersections, x, y, hit) {
   }
 }
 
-function makeMap(num) {
-  let map = Array(num).fill(Array(num))
-
-  map.forEach((a) => {
-    a.fill(0, 0, num)
-  })
-  return map
-}
-
 function newCoords(startx, starty, direction, length) {
   if(direction === 'R') {
     return {x :startx + length, y: starty}
@@ -150,7 +141,6 @@ function mdistance(x1, y1, x2, y2) {
   return Math.abs(x2 - x1) + Math.abs(y2 - y1);
 }
 
-module.exports.makeMap = makeMap
 module.exports.parse = parse
 module.exports.distance = distance
 module.exports.main = main

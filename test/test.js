@@ -26,7 +26,6 @@ tap.test('day2', async t => {
 
 tap.test('day3', async t => {
   t.deepEquals(day3.parse('R75'), { direction: 'R', length: 75})
-  t.deepEquals(day3.makeMap(3), [[0, 0, 0], [0, 0, 0], [0, 0, 0]])
   t.deepEquals(day3.distance(['R8','U5','L5','D3'],
                              ['U7','R6','D4','L4']), '6 30')
   t.deepEquals(day3.distance(['R75','D30','R83','U83','L12','D49','R71','U7','L72'],
