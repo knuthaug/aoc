@@ -1,0 +1,122 @@
+const fs = require('fs');
+
+function main(filename) {
+  fs.readFile('./' + filename, (_, data) => {
+    const lines = data.toString().split('\n')
+    const list = lines.map((l) => {
+      return l.split(',')
+    })
+    console.log(list)
+    console.log(distance(list[0], list[1]))
+  })
+}
+
+function distance(wire1, wire2) {
+  let [coords, intersects] = go(wire1, false)
+
+  let [coords2, intersects2] = go(wire2, true, coords)
+
+  const distances = intersects2.map((i) => {
+    return mdistance(0, 0, i.x, i.y)
+  }).sort((a, b) => a - b)
+  console.log(distances)
+  return distances[0]
+}
+
+function go(wire, hit, coords = []) {
+  const intersects = [] //intersections coordinates
+  let x = 0
+  let y = 0
+
+  for(let i = 0; i < wire.length; i++) {
+    console.log(`doing wire instruction ${i}`)
+    const cmd = parse(wire[i])
+    const newXY = newCoords(x, y, cmd.direction, cmd.length)
+
+    //console.log(x, y, newXY)
+    //mark path from x, y to newx, newY
+    
+    if(x === newXY.x) { // same x, vertical movement
+      if(newXY.y < y) {
+        for(let f = y; f >= newXY.y; f--) {
+          //console.log(`mark [${x}, ${f}]`)
+          mark(coords, intersects, x, f, hit)
+        }
+      } else {
+        for(let f = y; f <= newXY.y; f++) {
+          //console.log(`mark [${x}, ${f}]`)
+          mark(coords, intersects, x, f, hit)
+        }
+      }
+    } else if(y === newXY.y) { // same y, horisontal movement
+      if(newXY.x < x) {
+        for(let f = x; f >= newXY.x; f--) {
+          //console.log(`mark [${f}, ${y}]`)
+          mark(coords, intersects, f, y, hit)
+        }
+      } else {
+        for(let f = x; f <= newXY.x; f++) {
+          //console.log(`mark [${f}, ${y}]`)
+          mark(coords, intersects, f, y, hit)
+        }
+      }
+    }
+
+    x = newXY.x
+    y = newXY.y
+  }
+
+  return [coords, intersects]
+}
+
+function mark(coords, intersections, x, y, hit) {
+  const found = coords.find((coord) => {
+    return x !== 0 && y !== 0 && coord.x === x && coord.y === y
+  })
+
+  if(hit && found) {
+    //intersection
+    //console.log(`hit for ${x} ,${y}`)
+    intersections.push({x, y})
+  } else {
+    if(!hit) {
+      coords.push({x, y})
+    }
+  }
+}
+
+function makeMap(num) {
+  let map = Array(num).fill(Array(num))
+
+  map.forEach((a) => {
+    a.fill(0, 0, num)
+  })
+  return map
+}
+
+function newCoords(startx, starty, direction, length) {
+  if(direction === 'R') {
+    return {x :startx + length, y: starty}
+  } else if (direction === 'L') {
+    return {x: startx - length, y: starty}
+  } else if (direction === 'U') {
+    return {x: startx, y: starty + length}
+  }
+
+  // Down
+  return {x: startx, y: starty - length}
+}
+
+function parse(vector) {
+  const parts = vector.split('')
+  return { direction: parts[0], length: parseInt(parts.slice(1).join(''))}
+}
+
+function mdistance(x1, y1, x2, y2) {
+  return Math.abs(x2 - x1) + Math.abs(y2 - y1);
+}
+
+module.exports.makeMap = makeMap
+module.exports.parse = parse
+module.exports.distance = distance
+module.exports.main = main
