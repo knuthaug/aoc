@@ -6,12 +6,33 @@ function main(filename) {
     const list = lines.map((l) => {
       return l.split(',')
     })
-    console.log(list)
+    //console.log(list)
     console.log(distance(list[0], list[1]))
   })
 }
 
 function distance(wire1, wire2) {
+
+  var path1 = getPath(wire1);
+  var path2 = getPath(wire2);
+
+  const keys1 = Object.keys(path1)
+  const keys2 = Object.keys(path2)
+  const intersections = keys1.filter(x => keys2.includes(x))
+  const distances = intersections.map((i) => {
+    const p = i.split(',')
+    const o = { x: parseInt(p[0]), y: parseInt(p[1])}
+
+    return mdistance(0, 0, o.x, o.y)
+  }).sort((a, b) => a - b)
+
+  const steps = intersections.map((i) => {
+    return path1[i] + path2[i]
+  }).sort((a, b) => a - b)
+  return `${distances[0]} ${steps[0]}`
+}
+
+function distance2(wire1, wire2) {
   let [coords, intersects] = go(wire1, false)
 
   let [coords2, intersects2] = go(wire2, true, coords)
@@ -19,8 +40,32 @@ function distance(wire1, wire2) {
   const distances = intersects2.map((i) => {
     return mdistance(0, 0, i.x, i.y)
   }).sort((a, b) => a - b)
-  console.log(distances)
+  //console.log(distances)
   return distances[0]
+}
+
+function getPath(wire) {
+  const path = {}
+  let x = 0
+  let y = 0
+  let pathLength = 0
+
+  for(let i = 0; i < wire.length; i++) {
+    const cmd = parse(wire[i])
+
+    for(let j = 0; j < cmd.length; j++)
+    if(cmd.direction === 'R' ) {
+      path[`${++x},${y}`] = ++pathLength
+    } else if(cmd.direction === 'D' ) {
+      path[`${x},${--y}`] = ++pathLength
+    } else if(cmd.direction === 'L' ) {
+      path[`${--x},${y}`] = ++pathLength
+    } else if(cmd.direction === 'U' ) {
+      path[`${x},${++y}`] = ++pathLength
+    }
+  }
+
+  return path
 }
 
 function go(wire, hit, coords = []) {
@@ -29,34 +74,27 @@ function go(wire, hit, coords = []) {
   let y = 0
 
   for(let i = 0; i < wire.length; i++) {
-    console.log(`doing wire instruction ${i}`)
+    //console.log(`doing wire instruction ${i}`)
     const cmd = parse(wire[i])
     const newXY = newCoords(x, y, cmd.direction, cmd.length)
 
-    //console.log(x, y, newXY)
-    //mark path from x, y to newx, newY
-    
     if(x === newXY.x) { // same x, vertical movement
       if(newXY.y < y) {
         for(let f = y; f >= newXY.y; f--) {
-          //console.log(`mark [${x}, ${f}]`)
           mark(coords, intersects, x, f, hit)
         }
       } else {
         for(let f = y; f <= newXY.y; f++) {
-          //console.log(`mark [${x}, ${f}]`)
           mark(coords, intersects, x, f, hit)
         }
       }
     } else if(y === newXY.y) { // same y, horisontal movement
       if(newXY.x < x) {
         for(let f = x; f >= newXY.x; f--) {
-          //console.log(`mark [${f}, ${y}]`)
           mark(coords, intersects, f, y, hit)
         }
       } else {
         for(let f = x; f <= newXY.x; f++) {
-          //console.log(`mark [${f}, ${y}]`)
           mark(coords, intersects, f, y, hit)
         }
       }
@@ -75,13 +113,9 @@ function mark(coords, intersections, x, y, hit) {
   })
 
   if(hit && found) {
-    //intersection
-    //console.log(`hit for ${x} ,${y}`)
     intersections.push({x, y})
-  } else {
-    if(!hit) {
+  } else if(!hit){
       coords.push({x, y})
-    }
   }
 }
 
