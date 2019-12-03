@@ -109,13 +109,13 @@ function go(wire, hit, coords = []) {
 
 function mark(coords, intersections, x, y, hit) {
   const found = coords.find((coord) => {
-    return x !== 0 && y !== 0 && coord.x === x && coord.y === y
+    return coord.x === x && coord.y === y
   })
 
   if(hit && found) {
     intersections.push({x, y})
   } else if(!hit){
-      coords.push({x, y})
+    coords.push({x, y})
   }
 }
 
