@@ -3,6 +3,7 @@ const tap = require('tap')
 const day1 = require('../src/day1.js')
 const day2 = require('../src/day2.js')
 const day3 = require('../src/day3.js')
+const day4 = require('../src/day4.js')
 
 tap.test('day1', async t => {
   t.equals(day1.fuelForMass(12), 2)
@@ -32,5 +33,24 @@ tap.test('day3', async t => {
                                ['U62','R66','U55','R34','D71','R55','D58','R83']), '159 610')
   t.deepEquals(day3.distance(['R98','U47','R26','D63','R33','U87','L62','D20','R33','U53','R51'],
                              ['U98','R91','D20','R16','D67','R40','U7','R15','U6','R7']), '135 410')
+  t.end()
+})
+
+tap.test('day4', async t => {
+  t.equals(day4.criteria(122345), true)
+  t.equals(day4.criteria(12234), false)
+  t.equals(day4.criteria(1223445), false)
+  t.equals(day4.criteria(111111), true)
+  t.equals(day4.criteria(135679), false)
+  t.equals(day4.criteria(111123), true)
+  t.equals(day4.criteria(223450), false)
+  t.equals(day4.criteria(123789), false)
+
+  //t.equals(day4.analyze(234560,234600), 4)
+
+  t.equals(day4.criteria(112233), true)
+  t.equals(day4.criteria2(123444), false)
+  t.equals(day4.criteria2(111122), true)
+
   t.end()
 })
