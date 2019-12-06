@@ -4,6 +4,8 @@ const day1 = require('../src/day1.js')
 const day2 = require('../src/day2.js')
 const day3 = require('../src/day3.js')
 const day4 = require('../src/day4.js')
+const day5 = require('../src/day5.js')
+const day6 = require('../src/day6.js')
 
 tap.test('day1', async t => {
   t.equals(day1.fuelForMass(12), 2)
@@ -46,11 +48,29 @@ tap.test('day4', async t => {
   t.equals(day4.criteria(223450), false)
   t.equals(day4.criteria(123789), false)
 
-  //t.equals(day4.analyze(234560,234600), 4)
+  t.equals(day4.analyze(234560,234600), 4)
 
   t.equals(day4.criteria(112233), true)
   t.equals(day4.criteria2(123444), false)
   t.equals(day4.criteria2(111122), true)
+  t.end()
+})
 
+
+tap.test('day5', async t => {
+  t.deepEquals(day5.run([1,0,0,0,99], 0), [2,0,0,0,99])
+  t.deepEquals(day5.run([2,3,0,3,99], 0), [2,3,0,6,99])
+  t.deepEquals(day5.run([2,4,4,5,99,0], 0), [2,4,4,5,99,9801])
+  t.deepEquals(day5.run([1,1,1,4,99,5,6,0,99], 0), [30,1,1,4,2,5,6,0,99])
+  t.deepEquals(day5.run([1,9,10,3,2,3,11,0,99,30,40,50], 0), [3500,9,10,70,2,3,11,0,99,30,40,50])
+  t.end()
+})
+
+
+tap.test('day6', async t => {
+  //t.equals(day6.sumOrbits(['B)A']), 1)
+  //t.equals(day6.sumOrbits(['B)A', 'D)E']), 2)
+  //t.equals(day6.sumOrbits(['B)A', 'C)B']), 3)
+  t.equals(day6.sumOrbits(['COM)B', 'B)C','C)D', 'D)E', 'E)F', 'B)G', 'G)H', 'D)I', 'E)J', 'J)K', 'K)L']), 42)
   t.end()
 })
