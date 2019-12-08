@@ -6,6 +6,7 @@ const day3 = require('../src/day3.js')
 const day4 = require('../src/day4.js')
 const day5 = require('../src/day5.js')
 const day6 = require('../src/day6.js')
+const day8 = require('../src/day8.js')
 
 tap.test('day1', async t => {
   t.equals(day1.fuelForMass(12), 2)
@@ -72,5 +73,11 @@ tap.test('day6', async t => {
   //t.equals(day6.sumOrbits(['B)A', 'D)E']), 2)
   //t.equals(day6.sumOrbits(['B)A', 'C)B']), 3)
   t.equals(day6.sumOrbits(['COM)B', 'B)C','C)D', 'D)E', 'E)F', 'B)G', 'G)H', 'D)I', 'E)J', 'J)K', 'K)L']), 42)
+  t.end()
+})
+
+tap.test('day8', async t => {
+  t.deepEquals(day8.findLayers('123456789012', 3, 2), [['123', '456'], ['789', '012']])
+  //t.equals(day8.decode('0222112222120000', 2, 2), null)
   t.end()
 })

@@ -35,7 +35,7 @@ function sumOrbits(orbits) {
     orbitCount++
   }
 
-  console.log(`shortest path: ${findShortestPath(paths, 'YOU', 'SAN')}`)
+  //console.log(`shortest path: ${findShortestPath(paths, 'YOU', 'SAN')}`)
 
   return orbitCount
 }
