@@ -11,5 +11,5 @@ const day8 = require('./day8.js')
 //day3.main(process.argv[2])
 //day4.main(process.argv[2])
 //day6.main(process.argv[2])
-day8.main(process.argv[2])
-
+//day8.main(process.argv[2])
+day5.main(process.argv[2])

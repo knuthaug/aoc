@@ -7,6 +7,7 @@ const day4 = require('../src/day4.js')
 const day5 = require('../src/day5.js')
 const day6 = require('../src/day6.js')
 const day8 = require('../src/day8.js')
+const intcode = require('../src/intcode.js')
 
 tap.test('day1', async t => {
   t.equals(day1.fuelForMass(12), 2)
@@ -57,13 +58,20 @@ tap.test('day4', async t => {
   t.end()
 })
 
+tap.test('intcode lib', async t => {
+  t.deepEquals(intcode.run([1,0,0,0,99], 0), [2,0,0,0,99])
+  t.deepEquals(intcode.run([2,3,0,3,99], 0), [2,3,0,6,99])
+  t.deepEquals(intcode.run([2,4,4,5,99,0], 0), [2,4,4,5,99,9801])
+  t.deepEquals(intcode.run([1,1,1,4,99,5,6,0,99], 0), [30,1,1,4,2,5,6,0,99])
+  t.deepEquals(intcode.run([1,9,10,3,2,3,11,0,99,30,40,50], 0), [3500,9,10,70,2,3,11,0,99,30,40,50])
+
+  //day5
+  //t.deepEquals(intcode.run([3,0,99]), [5,0,99])
+  t.end()
+})
 
 tap.test('day5', async t => {
-  t.deepEquals(day5.run([1,0,0,0,99], 0), [2,0,0,0,99])
-  t.deepEquals(day5.run([2,3,0,3,99], 0), [2,3,0,6,99])
-  t.deepEquals(day5.run([2,4,4,5,99,0], 0), [2,4,4,5,99,9801])
-  t.deepEquals(day5.run([1,1,1,4,99,5,6,0,99], 0), [30,1,1,4,2,5,6,0,99])
-  t.deepEquals(day5.run([1,9,10,3,2,3,11,0,99,30,40,50], 0), [3500,9,10,70,2,3,11,0,99,30,40,50])
+  //t.equals([3,0,4,0,99], '')
   t.end()
 })
 

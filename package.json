@@ -19,6 +19,8 @@
   "homepage": "https://github.com/knuthaug/aoc-2019#readme",
   "dependencies": {
     "@datastructures-js/binary-search-tree": "2.0.1",
+    "bluebird": "3.7.2",
+    "inquirer": "7.0.0",
     "supervisor": "0.12.0",
     "tap": "14.10.2"
   }
