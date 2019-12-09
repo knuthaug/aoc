@@ -78,6 +78,6 @@ tap.test('day6', async t => {
 
 tap.test('day8', async t => {
   t.deepEquals(day8.findLayers('123456789012', 3, 2), [['123', '456'], ['789', '012']])
-  //t.equals(day8.decode('0222112222120000', 2, 2), null)
+  t.equals(day8.decode('0222112222120000', 2, 2), '\u2b1b\u2b1c\n\u2b1c\u2b1b\n')
   t.end()
 })
