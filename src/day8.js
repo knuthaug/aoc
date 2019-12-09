@@ -22,12 +22,16 @@ function decode(data, width, height) {
 }
 
 function firstVisiblePixel(layers, x, y) {
-  for(let i = 0; i < layers.length; i++) {
-    const value = layers[i][x].slice(y, y + 1)
-    if(value !== '2') {
-      return value === '0' ? '\u2b1b': '\u2b1c'
-    }
-  }
+
+  const item = layers.find((layer) => {
+    return slicer(layer[x], y) !== '2'
+  })
+
+  return slicer(item[x], y) === '0' ? '\u2b1b': '\u2b1c'
+}
+
+function slicer(list, position) {
+  return list.slice(position, position + 1)
 }
 
 function calculate(data, width, height) {
@@ -35,15 +39,14 @@ function calculate(data, width, height) {
   let minimumZeroes = 100000
   let minimumLayer = -1
 
-  for (let i = 0; i < layers.length-1; i++) {
-    const currentLayer = layers[i]
-    let zeroes = currentLayer.join('').split('0').length -1
+  layers.forEach((layer, i) => {
+    let zeroes = layer.join('').split('0').length - 1
     if (zeroes < minimumZeroes) {
       minimumZeroes = zeroes
       minimumLayer = i
       zeroes = 0
     }
-  }
+  })
 
   return (layers[minimumLayer].join('').split('1').length -1) * (layers[minimumLayer].join('').split('2').length -1)
 }

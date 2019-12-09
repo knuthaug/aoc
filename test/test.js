@@ -81,3 +81,8 @@ tap.test('day8', async t => {
   t.equals(day8.decode('0222112222120000', 2, 2), '\u2b1b\u2b1c\n\u2b1c\u2b1b\n')
   t.end()
 })
+
+tap.test('day9', async t => {
+  t.equals(true, true)
+  t.end()
+})
