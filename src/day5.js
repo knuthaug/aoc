@@ -3,7 +3,7 @@ const intcode = require('./intcode.js')
 const inquirer = require('inquirer')
 
 function main(filename) {
-  const f = intcode.run(filename.split(',').map(i => parseInt(i)))
+  const f = intcode.run(filename.split(',').map(i => parseInt(i)), 42)
   console.log(f)
   return
   fs.readFile('./' + filename, (_, data) => {

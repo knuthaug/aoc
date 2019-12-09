@@ -25,7 +25,7 @@ const functions = {
 
 }
 
-function run(list) {
+function run(list, input) {
 
   let pos = 0
   while(true) {
@@ -43,7 +43,11 @@ function run(list) {
       const [ loc1, loc2, loc3 ] = list.slice(pos + 1, pos + 4)
       list[loc3] = functions[operator](list[loc1], list[loc2])
       pos += 4
-    } else if(operator === 3 || operator === 4) {
+    } else if(operator === 3) {
+      const [loc] = list.slice(pos + 1, pos + 2)
+      list[loc] = input
+      pos += 2
+    } else if(operator === 4) {
       const [loc] = list.slice(pos + 1, pos + 2)
       functions[operator](list[loc])
       pos += 2
