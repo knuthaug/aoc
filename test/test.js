@@ -1,4 +1,5 @@
 const tap = require('tap')
+const fs = require('fs')
 
 const day1 = require('../src/day1.js')
 const day2 = require('../src/day2.js')
@@ -7,6 +8,7 @@ const day4 = require('../src/day4.js')
 const day5 = require('../src/day5.js')
 const day6 = require('../src/day6.js')
 const day8 = require('../src/day8.js')
+const day10 = require('../src/day10.js')
 const intcode = require('../src/intcode.js')
 
 tap.test('day1', async t => {
@@ -67,6 +69,20 @@ tap.test('intcode lib', async t => {
 
   //day5
   //t.deepEquals(intcode.run([3,0,99]), [5,0,99])
+  t.deepEquals(intcode.run([1002,4,3,4,33]), [1002, 4, 3, 4, 99])
+  t.deepEquals(intcode.run([1101,100,-1,4,0]), [1101,100,-1,4,99])
+
+  t.deepEquals(intcode.parseOperator(1002), { op: 2, params: ['P', 'I', 'P']})
+  t.deepEquals(intcode.parseOperator(102), { op: 2, params: ['I', 'P', 'P']})
+  t.deepEquals(intcode.parseOperator(2), { op: 2, params: ['P', 'P', 'P']})
+
+  t.deepEquals(intcode.parseOperator(04), { op: 4, params: ['P']})
+  t.deepEquals(intcode.parseOperator(104), { op: 4, params: ['I']})
+  t.deepEquals(intcode.parseOperator(107), { op: 7, params: ['I', 'P', 'P']})
+  t.deepEquals(intcode.parseOperator(07), { op: 7, params: ['P', 'P', 'P']})
+  t.deepEquals(intcode.parseOperator(7), { op: 7, params: ['P', 'P', 'P']})
+  t.deepEquals(intcode.parseOperator(1107), { op: 7, params: ['I', 'I', 'P']})
+
   t.end()
 })
 
@@ -94,3 +110,19 @@ tap.test('day9', async t => {
   t.equals(true, true)
   t.end()
 })
+
+tap.test('day10', async t => {
+  const ex1 = readAsteroidFile('./test/data/day10-1.txt')
+  //t.equals(day10.bestLocation(ex1), 8)
+
+  const ex2 = readAsteroidFile('./test/data/day10-2.txt')
+  //t.equals(day10.bestLocation(ex2), 33)
+
+  const ex3 = readAsteroidFile('./test/data/day10-3.txt')
+//  t.equals(day10.bestLocation(ex3), 35)
+  t.end()
+})
+
+function readAsteroidFile(name) {
+  return fs.readFileSync(name).toString().trim().split('\n')
+}
