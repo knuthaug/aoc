@@ -40,6 +40,7 @@ function padOperator(parts, op) {
 const functions = {
   1: (a, b) => a + b,
   2: (a, b) => a * b,
+  6: (arg1, arg2, fallback) => arg1 === 0 ? arg2 : fallback,
   7: (a, b) => a < b ? 1 : 0,
   8: (a, b) => a === b ? 1 : 0,
   3: () => 42,
@@ -108,11 +109,7 @@ function run(program, input) {
       }
     } else if (operator.op === JUMP_FALSE) { // jump-if-false
       const [arg1, arg2] = findParams(program, operator, getArguments(program, position, 3))
-      if(arg1 === 0) {
-        position = arg2
-      } else {
-        position += 3
-      }
+      position = functions[operator.op](arg1, 3)
     } else if (operator.op === LESS_THAN) { //less-than
       const [arg1, arg2, arg3] = findParams(program, operator, getArguments(program, position, 4))
       program[arg3] = functions[operator.op](arg1, arg2)
