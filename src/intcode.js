@@ -40,7 +40,8 @@ function padOperator(parts, op) {
 const functions = {
   1: (a, b) => a + b,
   2: (a, b) => a * b,
-  6: (arg1, arg2, fallback) => arg1 === 0 ? arg2 : fallback,
+  5: (arg1, arg2, fallback) => arg1 !== 0 ? arg2: fallback,
+  6: (arg1, arg2, fallback) => arg1 === 0 ? arg2: fallback,
   7: (a, b) => a < b ? 1 : 0,
   8: (a, b) => a === b ? 1 : 0,
   3: () => 42,
@@ -78,45 +79,43 @@ function run(program, input) {
       break;
     }
 
-    const operator = parseOperator(program.slice(position, position + 1))
+    const cmd = parseOperator(program.slice(position, position + 1))
 
-    if(operator.op === 99) {
+    if(cmd.op=== 99) {
       break;
     }
 
-    if(operator.op === ADD || operator.op === MULTIPLY) {
-      const [ arg1, arg2, arg3 ] = findParams(program, operator, getArguments(program, position, 4))
-      program[arg3] = functions[operator.op](arg1, arg2)
+    if(cmd.op === ADD || cmd.op === MULTIPLY) {
+      const [ arg1, arg2, arg3 ] = findParams(program, cmd, getArguments(program, position, 4))
+      program[arg3] = functions[cmd.op](arg1, arg2)
       position += 4
-    } else if(operator.op === INPUT) {
+    } else if(cmd.op === INPUT) {
       const [loc] = program.slice(position + 1, position + 2)
       program[loc] = input
       position += 2
-    } else if(operator.op === OUTPUT) {
-      const [loc] = findParams(program, operator, getArguments(program, position, 2))
-      if(operator.params[0] === 'I') {
-        functions[operator.op](loc)
+    } else if(cmd.op === OUTPUT) {
+      const [loc] = findParams(program, cmd, getArguments(program, position, 2))
+
+      if(cmd.params[0] === 'I') {
+        functions[cmd.op](loc)
       } else {
-        functions[operator.op](program[loc])
+        functions[cmd.op](program[loc])
       }
+
       position += 2
-    } else if (operator.op === JUMP_TRUE) { // jump-if-true
-      const [arg1, arg2] = findParams(program, operator, getArguments(program, position, 3))
-      if(arg1 !== 0) {
-        position = arg2
-      } else {
-        position += 3
-      }
-    } else if (operator.op === JUMP_FALSE) { // jump-if-false
-      const [arg1, arg2] = findParams(program, operator, getArguments(program, position, 3))
-      position = functions[operator.op](arg1, 3)
-    } else if (operator.op === LESS_THAN) { //less-than
-      const [arg1, arg2, arg3] = findParams(program, operator, getArguments(program, position, 4))
-      program[arg3] = functions[operator.op](arg1, arg2)
+    } else if (cmd.op === JUMP_TRUE) { // jump-if-true
+      const [arg1, arg2] = findParams(program, cmd, getArguments(program, position, 3))
+      position = functions[cmd.op](arg1, arg2, position + 3)
+    } else if (cmd.op === JUMP_FALSE) { // jump-if-false
+      const [arg1, arg2] = findParams(program, cmd, getArguments(program, position, 3))
+      position = functions[cmd.op](arg1, arg2, position + 3)
+    } else if (cmd.op === LESS_THAN) { //less-than
+      const [arg1, arg2, arg3] = findParams(program, cmd, getArguments(program, position, 4))
+      program[arg3] = functions[cmd.op](arg1, arg2)
       position += 4
-    } else if (operator.op === EQUALS) { //equals
-      const [arg1, arg2, arg3] = findParams(program, operator, getArguments(program, position, 4))
-      program[arg3] = functions[operator.op](arg1, arg2)
+    } else if (cmd.op === EQUALS) { //equals
+      const [arg1, arg2, arg3] = findParams(program, cmd, getArguments(program, position, 4))
+      program[arg3] = functions[cmd.op](arg1, arg2)
       position += 4
     }
   }
