@@ -82,6 +82,9 @@ tap.test('intcode lib', async t => {
   t.deepEquals(intcode.parseOperator(07), { op: 7, params: ['P', 'P', 'P']})
   t.deepEquals(intcode.parseOperator(7), { op: 7, params: ['P', 'P', 'P']})
   t.deepEquals(intcode.parseOperator(1107), { op: 7, params: ['I', 'I', 'P']})
+  t.deepEquals(intcode.parseOperator(5), { op: 5, params: ['P', 'P']})
+  t.deepEquals(intcode.parseOperator(105), { op: 5, params: ['I', 'P']})
+  t.deepEquals(intcode.parseOperator(1105), { op: 5, params: ['I', 'I']})
 
   t.end()
 })
