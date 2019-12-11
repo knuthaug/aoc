@@ -45,7 +45,7 @@ const functions = {
   7: (a, b) => a < b ? 1 : 0,
   8: (a, b) => a === b ? 1 : 0,
   3: () => 42,
-  4: (arg) => console.log(arg)
+  4: (arg) => arg
 
 }
 
@@ -72,7 +72,7 @@ function getArguments(program, pos, len) {
   return program.slice(pos + 1, pos + len)
 }
 
-function run(program, input) {
+function run(program, input, returnOutput) {
   let position = 0
   while(true) {
     if(position >= program.length) {
@@ -95,13 +95,19 @@ function run(program, input) {
       position += 2
     } else if(cmd.op === OUTPUT) {
       const [loc] = findParams(program, cmd, getArguments(program, position, 2))
-
+      let value 
       if(cmd.params[0] === 'I') {
-        functions[cmd.op](loc)
+        value = functions[cmd.op](loc)
       } else {
-        functions[cmd.op](program[loc])
+        value = functions[cmd.op](program[loc])
       }
 
+      if(returnOutput) {
+        return value
+      } else {
+        console.log(value)
+      }
+      
       position += 2
     } else if (cmd.op === JUMP_TRUE) { // jump-if-true
       const [arg1, arg2] = findParams(program, cmd, getArguments(program, position, 3))

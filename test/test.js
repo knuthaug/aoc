@@ -72,6 +72,21 @@ tap.test('intcode lib', async t => {
   t.deepEquals(intcode.run([1002,4,3,4,33]), [1002, 4, 3, 4, 99])
   t.deepEquals(intcode.run([1101,100,-1,4,0]), [1101,100,-1,4,99])
 
+  t.deepEquals(intcode.run([3,9,8,9,10,9,4,9,99,-1,8], 8, true), 1)
+  t.deepEquals(intcode.run([3,9,8,9,10,9,4,9,99,-1,8], 9, true), 0)
+  t.deepEquals(intcode.run([3,9,7,9,10,9,4,9,99,-1,8], 7, true), 1)
+  t.deepEquals(intcode.run([3,9,7,9,10,9,4,9,99,-1,8], 8, true), 0)
+  t.deepEquals(intcode.run([3,3,1108,-1,8,3,4,3,99], 8, true), 1)
+  t.deepEquals(intcode.run([3,3,1108,-1,8,3,4,3,99], 7, true), 0)
+  t.deepEquals(intcode.run([3,3,1107,-1,8,3,4,3,99], 7, true), 1)
+  t.deepEquals(intcode.run([3,3,1107,-1,8,3,4,3,99], 8, true), 0)
+
+  t.deepEquals(intcode.run([3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9], 0, true), 0)
+  t.deepEquals(intcode.run([3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9], 1, true), 1)
+  t.deepEquals(intcode.run([3,3,1105,-1,9,1101,0,0,12,4,12,99,1], 0, true), 0)
+  t.deepEquals(intcode.run([3,3,1105,-1,9,1101,0,0,12,4,12,99,1], 1, true), 1)
+
+  //operator parsing
   t.deepEquals(intcode.parseOperator(1002), { op: 2, params: ['P', 'I', 'P']})
   t.deepEquals(intcode.parseOperator(102), { op: 2, params: ['I', 'P', 'P']})
   t.deepEquals(intcode.parseOperator(2), { op: 2, params: ['P', 'P', 'P']})
