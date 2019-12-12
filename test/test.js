@@ -7,6 +7,7 @@ const day3 = require('../src/day3.js')
 const day4 = require('../src/day4.js')
 const day5 = require('../src/day5.js')
 const day6 = require('../src/day6.js')
+const day7 = require('../src/day7.js')
 const day8 = require('../src/day8.js')
 const day10 = require('../src/day10.js')
 const intcode = require('../src/intcode.js')
@@ -61,30 +62,30 @@ tap.test('day4', async t => {
 })
 
 tap.test('intcode lib', async t => {
-  t.deepEquals(intcode.run([1,0,0,0,99], 0), [2,0,0,0,99])
-  t.deepEquals(intcode.run([2,3,0,3,99], 0), [2,3,0,6,99])
-  t.deepEquals(intcode.run([2,4,4,5,99,0], 0), [2,4,4,5,99,9801])
-  t.deepEquals(intcode.run([1,1,1,4,99,5,6,0,99], 0), [30,1,1,4,2,5,6,0,99])
-  t.deepEquals(intcode.run([1,9,10,3,2,3,11,0,99,30,40,50], 0), [3500,9,10,70,2,3,11,0,99,30,40,50])
+  t.deepEquals(intcode.run([1,0,0,0,99], [0]), [2,0,0,0,99])
+  t.deepEquals(intcode.run([2,3,0,3,99], [0]), [2,3,0,6,99])
+  t.deepEquals(intcode.run([2,4,4,5,99,0], [0]), [2,4,4,5,99,9801])
+  t.deepEquals(intcode.run([1,1,1,4,99,5,6,0,99], [0]), [30,1,1,4,2,5,6,0,99])
+  t.deepEquals(intcode.run([1,9,10,3,2,3,11,0,99,30,40,50], [0]), [3500,9,10,70,2,3,11,0,99,30,40,50])
 
   //day5
   //t.deepEquals(intcode.run([3,0,99]), [5,0,99])
   t.deepEquals(intcode.run([1002,4,3,4,33]), [1002, 4, 3, 4, 99])
   t.deepEquals(intcode.run([1101,100,-1,4,0]), [1101,100,-1,4,99])
 
-  t.deepEquals(intcode.run([3,9,8,9,10,9,4,9,99,-1,8], 8, true), 1)
-  t.deepEquals(intcode.run([3,9,8,9,10,9,4,9,99,-1,8], 9, true), 0)
-  t.deepEquals(intcode.run([3,9,7,9,10,9,4,9,99,-1,8], 7, true), 1)
-  t.deepEquals(intcode.run([3,9,7,9,10,9,4,9,99,-1,8], 8, true), 0)
-  t.deepEquals(intcode.run([3,3,1108,-1,8,3,4,3,99], 8, true), 1)
-  t.deepEquals(intcode.run([3,3,1108,-1,8,3,4,3,99], 7, true), 0)
-  t.deepEquals(intcode.run([3,3,1107,-1,8,3,4,3,99], 7, true), 1)
-  t.deepEquals(intcode.run([3,3,1107,-1,8,3,4,3,99], 8, true), 0)
+  t.deepEquals(intcode.run([3,9,8,9,10,9,4,9,99,-1,8], [8], true), 1)
+  t.deepEquals(intcode.run([3,9,8,9,10,9,4,9,99,-1,8], [9], true), 0)
+  t.deepEquals(intcode.run([3,9,7,9,10,9,4,9,99,-1,8], [7], true), 1)
+  t.deepEquals(intcode.run([3,9,7,9,10,9,4,9,99,-1,8], [8], true), 0)
+  t.deepEquals(intcode.run([3,3,1108,-1,8,3,4,3,99], [8], true), 1)
+  t.deepEquals(intcode.run([3,3,1108,-1,8,3,4,3,99], [7], true), 0)
+  t.deepEquals(intcode.run([3,3,1107,-1,8,3,4,3,99], [7], true), 1)
+  t.deepEquals(intcode.run([3,3,1107,-1,8,3,4,3,99], [8], true), 0)
 
-  t.deepEquals(intcode.run([3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9], 0, true), 0)
-  t.deepEquals(intcode.run([3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9], 1, true), 1)
-  t.deepEquals(intcode.run([3,3,1105,-1,9,1101,0,0,12,4,12,99,1], 0, true), 0)
-  t.deepEquals(intcode.run([3,3,1105,-1,9,1101,0,0,12,4,12,99,1], 1, true), 1)
+  t.deepEquals(intcode.run([3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9], [0], true), 0)
+  t.deepEquals(intcode.run([3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9], [1], true), 1)
+  t.deepEquals(intcode.run([3,3,1105,-1,9,1101,0,0,12,4,12,99,1], [0], true), 0)
+  t.deepEquals(intcode.run([3,3,1105,-1,9,1101,0,0,12,4,12,99,1], [1], true), 1)
 
   //operator parsing
   t.deepEquals(intcode.parseOperator(1002), { op: 2, params: ['P', 'I', 'P']})
@@ -115,6 +116,19 @@ tap.test('day6', async t => {
   //t.equals(day6.sumOrbits(['B)A', 'D)E']), 2)
   //t.equals(day6.sumOrbits(['B)A', 'C)B']), 3)
   t.equals(day6.sumOrbits(['COM)B', 'B)C','C)D', 'D)E', 'E)F', 'B)G', 'G)H', 'D)I', 'E)J', 'J)K', 'K)L']), 42)
+  t.end()
+})
+
+tap.test('day7', async t => {
+  t.deepEquals(day7.permutator([]), [[]])
+  t.deepEquals(day7.permutator([1]), [[1]])
+  t.deepEquals(day7.permutator([1, 2]), [[1, 2], [2, 1]])
+  t.deepEquals(day7.permutator([1, 2, 3]), [ [1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]])
+
+  t.equals(day7.testAmplifiers([3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0]), 43210)
+  t.equals(day7.testAmplifiers([3,23,3,24,1002,24,10,24,1002,23,-1,23,101,5,23,23,1,24,23,23,4,23,99,0,0]), 54321)
+
+  //t.equals(day7.feedbackLoop([3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5]), 139629729)
   t.end()
 })
 
