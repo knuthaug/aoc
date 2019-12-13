@@ -87,6 +87,10 @@ tap.test('intcode lib', async t => {
   t.deepEquals(intcode.run([3,3,1105,-1,9,1101,0,0,12,4,12,99,1], [0], true), 0)
   t.deepEquals(intcode.run([3,3,1105,-1,9,1101,0,0,12,4,12,99,1], [1], true), 1)
 
+  t.deepEquals(intcode.run([109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99], [], true), 109)
+  t.deepEquals(intcode.run([1102,34915192,34915192,7,4,7,99,0], [0], true), 1219070632396864)
+  t.deepEquals(intcode.run([104,1125899906842624,99], [0], true), 1125899906842624)
+  
   //operator parsing
   t.deepEquals(intcode.parseOperator(1002), { op: 2, params: ['P', 'I', 'P']})
   t.deepEquals(intcode.parseOperator(102), { op: 2, params: ['I', 'P', 'P']})
@@ -101,6 +105,8 @@ tap.test('intcode lib', async t => {
   t.deepEquals(intcode.parseOperator(5), { op: 5, params: ['P', 'P']})
   t.deepEquals(intcode.parseOperator(105), { op: 5, params: ['I', 'P']})
   t.deepEquals(intcode.parseOperator(1105), { op: 5, params: ['I', 'I']})
+
+  t.deepEquals(intcode.parseOperator(205), { op: 5, params: ['R', 'P']})
 
   t.end()
 })

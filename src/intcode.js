@@ -6,6 +6,7 @@ const JUMP_TRUE = 5
 const JUMP_FALSE = 6
 const LESS_THAN = 7
 const EQUALS = 8
+const ADJUST_RELATIVE_BASE = 9
 
 function parseOperator(fullOperator) {
   let parts = (fullOperator + '').split('')
@@ -15,7 +16,13 @@ function parseOperator(fullOperator) {
   parts = padOperator(parts, op)
 
   for(let i = (parts.length - 3);i >= 0; i--) {
-    params.push(parts[i] === '0' ? 'P' : 'I')
+    if(parts[i] === '0') {
+      params.push('P')
+    } else if (parts[i] === '2') {
+      params.push('R')
+    } else {
+      params.push('I')
+    }
   }
 
   return {op, params}
@@ -27,7 +34,7 @@ function padOperator(parts, op) {
     len = 5
   } else if ([5, 6].includes(op)) {
     len = 4
-  } else if ([3, 4].includes(op)) {
+  } else if ([3, 4, 9].includes(op)) {
     len = 3
   }
 
@@ -75,6 +82,12 @@ function getArguments(program, pos, len) {
 function run(program, inputs, returnOutput = false) {
   let position = 0
   let inputPosition = 0
+  let relativeBase = 0
+
+  //larger memory
+  for(let i = 0; i < 10000; i++) {
+    program.push(0)
+  }
 
   while(true) {
     if(position >= program.length) {
@@ -93,13 +106,21 @@ function run(program, inputs, returnOutput = false) {
       position += 4
     } else if(cmd.op === INPUT) {
       const [loc] = program.slice(position + 1, position + 2)
-      program[loc] = inputs[inputPosition++]
+
+      if(cmd.params[0] === 'P') {
+        program[loc] = inputs[inputPosition++]
+      } else {
+        program[loc + relativeBase] = inputs[inputPosition++]
+      }
+      
       position += 2
     } else if(cmd.op === OUTPUT) {
       const [loc] = findParams(program, cmd, getArguments(program, position, 2))
-      let value 
+      let value
       if(cmd.params[0] === 'I') {
         value = functions[cmd.op](loc)
+      } else if(cmd.params[0] === 'R'){
+        value = functions[cmd.op](program[loc + relativeBase])
       } else {
         value = functions[cmd.op](program[loc])
       }
@@ -125,9 +146,30 @@ function run(program, inputs, returnOutput = false) {
       const [arg1, arg2, arg3] = findParams(program, cmd, getArguments(program, position, 4))
       program[arg3] = functions[cmd.op](arg1, arg2)
       position += 4
+    } else if (cmd.op === ADJUST_RELATIVE_BASE) {
+      const [arg] = program.slice(position + 1, position + 2)
+      if(cmd.params[0] === 'I') {
+        relativeBase += arg
+      } else if (cmd.params[0] === 'P') {
+        relativeBase += program[arg]
+      } else {
+        relativeBase += program[arg + relativeBase]
+      }
+      position += 2
     }
   }
-  return program
+  return trim(program)
+}
+
+function trim(list) {
+  for(let i = list.length-1; i >= 0; i--) {
+    if(list[i] === 0) {
+      list.pop()
+    } else {
+      break;
+    }
+  }
+  return list
 }
 
 module.exports.parseOperator = parseOperator
