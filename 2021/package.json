@@ -1,0 +1,16 @@
+{
+  "name": "aoc-2021",
+  "version": "1.0.0",
+  "description": "",
+  "main": "runner.mjs",
+  "scripts": {
+    "run": "node runner.mjs",
+    "test": "mocha test/*.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "4.3.4",
+    "mocha": "9.1.3"
+  }
+}
