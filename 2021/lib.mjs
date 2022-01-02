@@ -10,3 +10,17 @@ export function readFile(fileName) {
   }
   return [];
 }
+
+export function take(list, position, value) {
+  return list.filter((el) => {
+    const bit = parseInt(el.slice(position, position + 1), 10);
+    //console.log(bit, value);
+    return bit === value;
+  });
+}
+
+export function freq(list) {
+  return list.reduce(function (acc, curr) {
+    return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
+  }, {});
+}
