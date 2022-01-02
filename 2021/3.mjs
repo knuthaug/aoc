@@ -1,6 +1,6 @@
 import fs from "fs";
 import { gt, take, freq } from "./lib.mjs";
-const lines = fs.readFileSync("3.txt").toString().trim().split("\n");
+const lines = fs.readFileSync("./inputs/3.txt").toString().trim().split("\n");
 
 export function day3() {
   const values = day3Calculations(lines);

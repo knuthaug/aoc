@@ -1,6 +1,6 @@
 import { readFile } from "./lib.mjs";
 
-const lines = readFile("2.txt").map((line) => {
+const lines = readFile("./inputs/2.txt").map((line) => {
   const l = line.split(" ");
   return [l[0], parseInt(l[1], 10)];
 });

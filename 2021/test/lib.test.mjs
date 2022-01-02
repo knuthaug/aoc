@@ -12,7 +12,7 @@ describe("library", async () => {
 
   describe("readFile()", async () => {
     it("should return splitted lines as array", async () => {
-      const lines = readFile("1.txt");
+      const lines = readFile("./inputs/1.txt");
       expect(lines.length).to.equal(2000);
     });
     it("should return empty array for invalid filename ", async () => {

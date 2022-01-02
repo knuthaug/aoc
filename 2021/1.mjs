@@ -1,6 +1,6 @@
 import { readFile } from "./lib.mjs";
 
-const rawInput = readFile("1.txt");
+const rawInput = readFile("./inputs/1.txt");
 const input = rawInput.map((num) => parseInt(num, 10));
 
 export function day1() {
