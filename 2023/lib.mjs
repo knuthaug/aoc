@@ -11,6 +11,10 @@ export function readFile(fileName) {
   return [];
 }
 
+export function parseFile(fileName, parser) {
+  return readFile(fileName).map(parser.parse);
+}
+
 export function take(list, position, value) {
   return list.filter((el) => {
     const bit = parseInt(el.slice(position, position + 1), 10);
