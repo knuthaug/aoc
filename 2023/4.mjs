@@ -1,4 +1,3 @@
-import { parse } from "path";
 import { readFile } from "./lib.mjs";
 const input = readFile("./input/4.txt");
 
