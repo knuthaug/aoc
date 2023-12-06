@@ -120,7 +120,7 @@ function parseMaps(input) {
   let currentMapName = "";
   let currentMap = [];
   let all = {};
-  for (const line of input) {
+  for (const line of input2) {
     if (line.match(/^seeds:/)) {
       const seeds = line
         .substring(line.indexOf(":") + 1)
