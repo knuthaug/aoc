@@ -13,11 +13,18 @@ export async function day6() {
     const time = times[i];
     const distance = distances[i];
 
+    let last = -1;
     for (let j = 0; j < time; j++) {
       const speed = j;
       const travelledDistance = speed * (time - j);
       if (travelledDistance > distance) {
         numberOfWins++;
+      }
+      if (travelledDistance > last) {
+        last = travelledDistance;
+      }
+      if (travelledDistance < last && travelledDistance <= distance) {
+        break;
       }
     }
     sum = sum === 0 ? numberOfWins : sum * numberOfWins;
