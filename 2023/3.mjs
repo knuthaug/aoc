@@ -1,5 +1,4 @@
 import { readFile } from "./lib.mjs";
-import { part1, part2 } from "./test.mjs";
 const input = readFile("./input/3.txt");
 
 const input2 = `467..114..
@@ -14,35 +13,6 @@ const input2 = `467..114..
 .664.598..`.split("\n");
 
 export async function day3() {
-  const sum1 = await part1(input);
-  console.log(sum1);
-  let sum = 0;
-  const grid = input.map((line) => line.split(""));
-  //console.log(grid);
-  for (let row = 0; row < grid.length; row++) {
-    let number = "";
-    for (let cell = 0; cell < grid[row].length; cell++) {
-      if (grid[row][cell].match(/[0-9]/)) {
-        number += grid[row][cell];
-      } else if (
-        grid[row][cell] === "." ||
-        !grid[row][cell].match(/[0-9]/) ||
-        cell === grid[row].length - 1 // end of lines
-      ) {
-        const len = number.length;
-        if (len > 0) {
-          if (check(grid, row, cell - 1, len)) {
-            //console.log(`Found ${number} is good`);
-            sum += Number(number);
-          }
-
-          number = "";
-        }
-      }
-    }
-  }
-  console.log(sum);
-
   // part 2
   let sum23 = 0;
   console.log(sum23);
