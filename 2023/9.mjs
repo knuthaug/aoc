@@ -42,14 +42,10 @@ export async function day9() {
 }
 
 function newFirsts(arr) {
-  const newarr = [0];
-  let target = arr[arr.length - 1];
-  for (let i = arr.length - 2; i >= 0; i--) {
-    if (newarr.length === 1) {
-      newarr.push(arr[i]);
-      target = arr[i - 1];
-      continue;
-    }
+  const newarr = [0, arr[arr.length - 2]];
+  let target = arr[arr.length - 3];
+
+  for (let i = arr.length - 3; i >= 0; i--) {
     newarr.push(target + -newarr[newarr.length - 1]);
     target = arr[i - 1];
   }
