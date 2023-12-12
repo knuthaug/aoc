@@ -16,7 +16,7 @@ const input2 = `...#......
 const newMap = [];
 export async function day11() {
   let sum2 = 0;
-  /* 
+
   const map = parseInput(input2, 1);
 
   let galaxy = 1;
@@ -46,7 +46,7 @@ export async function day11() {
   console.log(
     "1: ",
     distances.reduce((a, b) => a + b, 0),
-  ); */
+  );
 
   parseInput(input2, 1000 - 1);
   console.log(`map size:${newMap.length}x${newMap[0].length}`);
