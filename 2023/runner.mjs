@@ -7,6 +7,8 @@ import { day6 } from "./6.mjs";
 import { day7 } from "./7.mjs";
 import { day8 } from "./8.mjs";
 import { day9 } from "./9.mjs";
+import { day10 } from "./10.mjs";
+import { day11 } from "./11.mjs";
 
 console.log("Day 1");
 day1();
@@ -42,4 +44,12 @@ console.log("--------------------------");
 
 console.log("Day 9");
 day9();
+console.log("--------------------------");
+
+console.log("Day 10");
+//day10();
+console.log("--------------------------");
+
+console.log("Day 11");
+day11();
 console.log("--------------------------");
