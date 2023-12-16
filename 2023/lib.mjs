@@ -28,3 +28,9 @@ export function freq(list) {
     return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
   }, {});
 }
+
+export function gridPrint(grid, space = " ") {
+  grid.forEach((row) => {
+    console.log(row.join(space));
+  });
+}

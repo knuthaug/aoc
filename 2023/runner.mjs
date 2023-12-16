@@ -9,7 +9,11 @@ import { day8 } from "./8.mjs";
 import { day9 } from "./9.mjs";
 import { day10 } from "./10.mjs";
 import { day11 } from "./11.mjs";
+import { day14 } from "./14.mjs";
+import { day15 } from "./15.mjs";
+import { day16 } from "./16.mjs";
 
+/*
 console.log("Day 1");
 day1();
 console.log("--------------------------");
@@ -52,4 +56,16 @@ console.log("--------------------------");
 
 console.log("Day 11");
 day11();
+console.log("--------------------------");
+
+console.log("Day 14");
+day14();
+console.log("--------------------------");
+
+ console.log("Day 15");
+day15();
+console.log("--------------------------"); */
+
+console.log("Day 16");
+day16();
 console.log("--------------------------");
