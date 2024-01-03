@@ -12,6 +12,8 @@ import { day11 } from "./11.mjs";
 import { day14 } from "./14.mjs";
 import { day15 } from "./15.mjs";
 import { day16 } from "./16.mjs";
+import { day17 } from "./17.mjs";
+import { day19 } from "./19.mjs";
 
 /*
 console.log("Day 1");
@@ -64,8 +66,18 @@ console.log("--------------------------");
 
  console.log("Day 15");
 day15();
-console.log("--------------------------"); */
+console.log("--------------------------"); 
 
 console.log("Day 16");
 day16();
 console.log("--------------------------");
+
+*/
+console.log("Day 17");
+day17();
+console.log("--------------------------");
+
+/* console.log("Day 19");
+day19();
+console.log("--------------------------");
+ */

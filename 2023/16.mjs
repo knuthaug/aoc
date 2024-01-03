@@ -57,7 +57,7 @@ function followBeam(grid, stack = [["r", 0, 0]]) {
     energized[i] = new Array(length).fill(".");
   }
 
-  console.log("stack", stack);
+  //console.log("stack", stack);
 
   while (stack.length > 0) {
     const [dir, y, x] = stack.pop();
